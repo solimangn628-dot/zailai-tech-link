@@ -3,38 +3,687 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a0f">
-<meta name="description" content="الزيلعي تك لينك — حلول تقنية، تطوير مواقع وتطبيقات، ودعم فني احترافي.">
-<title>الزيلعي تك لينك | Al-Zailai Tech Link</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#040b16">
+<meta name="description" content="الزيلعي تك لينك — حلول شبكية واتصالات متطورة. شبكات متكاملة، أنظمة مراقبة ذكية، إدارة وبرمجة MikroTik.">
+<title>الزيلعي تك لينك | هندسة وحلول الشبكات والأنظمة المتكاملة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: { sans: ['Tajawal','system-ui','sans-serif'] },
+    colors: {
+      navy:  { 950:'#040b16', 900:'#071426', 800:'#0a1d33', 700:'#0e2a47' },
+      cyanx: { 400:'#22d3ee', 500:'#06b6d4', 600:'#0891b2' }
+    }
+  }}
+}
+</script>
 <style>
-:root{--bg:#0a0a0f;--bg-alt:#101018;--surface:#14141f;--line:rgba(255,255,255,.08);
---text:#e9e9f0;--muted:#9a9aae;--accent:#c9a227;--accent-2:#e6c458;--radius:16px;--nav-h:68px}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Tajawal',-apple-system,'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);
-color:var(--text);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-.container{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
-/* NAV */
-.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:var(--nav-h);
-background:rgba(10,10,15,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-border-bottom:1px solid transparent;transition:.3s}
-.nav.scrolled{border-bottom-color:var(--line);background:rgba(10,10,15,.94)}
-.nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
-.brand-mark{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:10px;
-font-weight:800;color:#0a0a0f;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
-.brand-text em{font-style:normal;color:var(--accent)}
-.nav-links{display:flex;align-items:center;gap:28px;font-size:.95rem;font-weight:500}
-.nav-links a{color:var(--muted);transition:.2s;position:relative}
-.nav-links a:hover{color:var(--text)}
-.nav-links a::after{content:'';position:absolute;bottom:-6px;right:0;width:0;height:2px;
-background:var(--accent);transition:.25s}
-.nav-links a:hover::after{width:100%}
-.nav-toggle{display:none;width:42px;height:42px;border:1px solid var(--line);background:transparent;
-border-radius:10px;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:5px}
-.nav-toggle span{width:18px;height:2px;background:var(--text);transition:.3s;border-radius:2px}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{background:#040b16;overflow-x:hidden}
+  .glow{box-shadow:0 0 24px rgba(34,211,238,.35),0 0 60px rgba(34,211,238,.12)}
+  .glow-sm{box-shadow:0 0 14px rgba(34,211,238,.30)}
+  .text-glow{text-shadow:0 0 18px rgba(34,211,238,.55)}
+  .grid-bg{background-image:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,211,238,.055) 1px,transparent 1px);background-size:46px 46px}
+  .radial-fade{background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(6,182,212,.18),transparent 70%)}
+
+  /* إطار وسائط: يظهر بديل أنيق إن لم توجد الصورة */
+  .media{position:relative;overflow:hidden;display:grid;place-items:center;
+    background:linear-gradient(145deg,#0a1d33,#071426);
+    border:1px solid rgba(34,211,238,.22)}
+  .media::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 50% 120%,rgba(34,211,238,.20),transparent 65%)}
+  .media>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity .45s ease;z-index:2}
+  .media>img.ok{opacity:1}
+  .media>svg{position:relative;z-index:1}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}
+    70%{box-shadow:0 0 0 18px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .pulse-wa{animation:pulseRing 2.2s infinite}
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .float-wa{animation:floatY 3s ease-in-out infinite}
+
+  /* ===== النافذة المنبثقة ===== */
+  .modal{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center}
+  @media(min-width:640px){.modal{align-items:center}}
+  .modal.open{display:flex}
+  .modal-backdrop{position:absolute;inset:0;background:rgba(2,6,14,.82);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    opacity:0;transition:opacity .3s ease}
+  .modal.open .modal-backdrop{opacity:1}
+  .modal-panel{position:relative;width:100%;max-width:720px;max-height:92vh;overflow-y:auto;
+    background:linear-gradient(180deg,#0a1d33,#071426);
+    border:1px solid rgba(34,211,238,.28);
+    border-radius:26px 26px 0 0;
+    transform:translateY(40px);opacity:0;transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .3s ease;
+    box-shadow:0 -10px 60px rgba(0,0,0,.6),0 0 40px rgba(34,211,238,.10)}
+  @media(min-width:640px){.modal-panel{border-radius:26px;transform:scale(.94) translateY(16px)}}
+  .modal.open .modal-panel{transform:none;opacity:1}
+  .modal-panel::-webkit-scrollbar{width:6px}
+  .modal-panel::-webkit-scrollbar-thumb{background:rgba(34,211,238,.35);border-radius:99px}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}.reveal{opacity:1;transform:none}
+    .modal-panel{transform:none}
+  }
+</style>
+</head>
+
+<body class="font-sans text-slate-200 antialiased">
+
+<!-- ============ NAVBAR ============ -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="h-[76px] flex items-center justify-between gap-4">
+
+      <a href="#home" class="flex items-center gap-3 shrink-0">
+        <span class="w-11 h-11 rounded-xl grid place-items-center font-black text-navy-950 text-lg
+                     bg-gradient-to-br from-cyanx-400 to-cyanx-600 glow-sm">ZT</span>
+        <span class="leading-tight">
+          <span class="block font-extrabold text-[15px] sm:text-base text-white">
+            الزيلعي <span class="text-cyanx-400">تك لينك</span></span>
+          <span class="block text-[9px] sm:text-[10px] tracking-[2px] text-cyanx-400/80 font-bold">AL-ZILEI TECH LINK</span>
+          <span class="hidden sm:block text-[10px] text-slate-400 mt-0.5">حلول تقنية متكاملة .. لربط عالمك</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-[15px] font-bold">
+        <a href="#home" class="text-slate-300 hover:text-cyanx-400 transition">الرئيسية</a>
+        <a href="#services" class="text-slate-300 hover:text-cyanx-400 transition">خدماتنا</a>
+        <a href="#works" class="text-slate-300 hover:text-cyanx-400 transition">أعمالنا</a>
+        <a href="#about" class="text-slate-300 hover:text-cyanx-400 transition">من أنا</a>
+        <a href="#certs" class="text-slate-300 hover:text-cyanx-400 transition">شهاداتي</a>
+        <a href="#contact" class="text-slate-300 hover:text-cyanx-400 transition">اتصل بنا</a>
+      </nav>
+
+      <a href="https://wa.me/967717117765"
+         class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-sm
+                bg-green-600 hover:bg-green-500 text-white transition shadow-lg shadow-green-600/25">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span dir="ltr" class="font-extrabold">717117765</span>
+      </a>
+
+      <button id="navToggle" aria-label="القائمة" aria-expanded="false"
+              class="lg:hidden w-11 h-11 grid place-items-center rounded-xl border border-cyanx-400/25 bg-navy-800/60 backdrop-blur">
+        <span class="block w-5 h-0.5 bg-cyanx-400 mb-1.5 transition-all"></span>
+        <span class="block w-5 h-0.5 bg-cyanx-400 mb-1.5 transition-all"></span>
+        <span class="block w-5 h-0.5 bg-cyanx-400 transition-all"></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="lg:hidden max-h-0 overflow-hidden transition-all duration-300
+       bg-navy-950/98 backdrop-blur-xl border-t border-cyanx-400/15">
+    <nav class="px-5 py-4 flex flex-col gap-1 font-bold">
+      <a href="#home" class="py-3.5 px-2 border-b border-white/5 hover:text-cyanx-400 transition">الرئيسية</a>
+      <a href="#services" class="py-3.5 px-2 border-b border-white/5 hover:text-cyanx-400 transition">خدماتنا</a>
+      <a href="#works" class="py-3.5 px-2 border-b border-white/5 hover:text-cyanx-400 transition">أعمالنا</a>
+      <a href="#about" class="py-3.5 px-2 border-b border-white/5 hover:text-cyanx-400 transition">من أنا</a>
+      <a href="#certs" class="py-3.5 px-2 border-b border-white/5 hover:text-cyanx-400 transition">شهاداتي</a>
+      <a href="#contact" class="py-3.5 px-2 hover:text-cyanx-400 transition">اتصل بنا</a>
+      <a href="https://wa.me/967717117765"
+         class="mt-3 py-3.5 rounded-xl bg-green-600 text-white text-center flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span dir="ltr" class="font-extrabold">717117765</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative min-h-[100svh] flex items-center pt-28 pb-20 overflow-hidden">
+  <div class="absolute inset-0 grid-bg opacity-70"></div>
+  <div class="absolute inset-0 radial-fade"></div>
+  <div class="absolute -top-40 -right-32 w-[560px] h-[560px] rounded-full bg-cyanx-500/12 blur-[120px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-32 w-[480px] h-[480px] rounded-full bg-cyanx-600/10 blur-[120px] pointer-events-none"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] font-bold
+                   border border-cyanx-400/30 bg-cyanx-500/10 text-cyanx-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyanx-400 animate-pulse"></span>
+        حلول شبكية واتصالات متطورة
+      </span>
+
+      <h1 class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-black leading-[1.25] text-white mb-6">
+        الزيلعي تك لينك
+        <span class="block mt-3 text-cyanx-400 text-glow text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem]">
+          ريادة هندسية في ربط وتأمين عالمك الرقمي
+        </span>
+      </h1>
+
+      <p class="reveal text-base sm:text-lg text-slate-300/90 leading-relaxed max-w-2xl mx-auto mb-10">
+        نبتكر الحلول، نربط المسافات، ونضمن لك بنية تحتية مستقرة وآمنة بأعلى معايير المصداقية والثقة.
+      </p>
+
+      <div class="reveal">
+        <a href="https://wa.me/967717117765"
+           class="pulse-wa inline-flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4
+                  w-full sm:w-auto px-7 sm:px-10 py-5 rounded-2xl font-black text-white
+                  bg-gradient-to-l from-green-600 to-green-500 hover:from-green-500 hover:to-green-400
+                  transition duration-300 active:scale-[.98]">
+          <span class="flex items-center gap-3">
+            <svg class="w-8 h-8 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            <span class="text-right leading-snug">
+              <span class="block text-[13px] font-bold opacity-90">الزيلعي تك لينك .. أينما كنت</span>
+              <span class="block text-lg sm:text-xl">«اتصل نصل»</span>
+            </span>
+          </span>
+          <span dir="ltr" class="text-2xl sm:text-3xl font-black tracking-wider pt-3 sm:pt-0 sm:pr-4 sm:border-r border-white/25">717117765</span>
+        </a>
+      </div>
+
+      <div class="reveal mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm font-bold text-slate-400">
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>ثقة</span>
+        <span class="w-px h-5 bg-white/10"></span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>أمان</span>
+        <span class="w-px h-5 bg-white/10"></span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"/></svg>مصداقية</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="relative py-20 sm:py-28 bg-navy-900/60 border-y border-cyanx-400/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-20 reveal">
+      <span class="text-cyanx-400 font-black text-sm tracking-[3px]">ماذا نقدّم</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-3 mb-4">خدماتنا</h2>
+      <p class="text-slate-400 leading-relaxed">اضغط على أي خدمة لعرض التفاصيل والصور.</p>
+    </div>
+
+    <div class="grid gap-6 sm:gap-7 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ WORKS ============ -->
+<section id="works" class="relative py-20 sm:py-28 overflow-hidden">
+  <div class="absolute inset-0 grid-bg opacity-40"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-20 reveal">
+      <span class="text-cyanx-400 font-black text-sm tracking-[3px]">أعمالنا</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-3 mb-4">مشاريع نفخر بها</h2>
+      <p class="text-slate-400 leading-relaxed">اضغط على أي مشروع لعرض الصور والتفاصيل.</p>
+    </div>
+    <div class="grid gap-6 sm:gap-7 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" id="worksGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="relative py-20 sm:py-28 bg-navy-900/60 border-y border-cyanx-400/10 overflow-hidden">
+  <div class="absolute inset-0 radial-fade opacity-60"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-12 lg:gap-16 lg:grid-cols-[auto_1fr] items-center">
+
+      <div class="reveal flex justify-center">
+        <div class="relative">
+          <div class="absolute inset-0 rounded-full bg-cyanx-500/25 blur-3xl scale-110"></div>
+          <div class="media relative w-56 h-56 sm:w-72 sm:h-72 rounded-full glow">
+            <img src="images/engineer.jpg" alt="المهندس سليمان زيلعي" onload="this.classList.add('ok')" onerror="this.remove()">
+            <svg class="w-24 h-24 text-cyanx-400/70" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+          </div>
+          <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full text-[12px] font-black
+                       whitespace-nowrap text-navy-950 bg-gradient-to-l from-cyanx-400 to-cyanx-600 glow-sm">حلول متكاملة</span>
+        </div>
+      </div>
+
+      <div class="reveal text-center lg:text-right">
+        <span class="text-cyanx-400 font-black text-sm tracking-[3px]">من أنا</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-3 mb-6">المهندس: سليمان زيلعي</h2>
+        <p class="text-lg sm:text-xl font-bold text-cyanx-400/90 mb-6">متخصص ومهندس الشبكات والحلول المتكاملة</p>
+        <p class="text-slate-300/90 leading-relaxed mb-5 max-w-2xl mx-auto lg:mr-0">
+          بخبرة عملية في تصميم وتنفيذ البنى التحتية للشبكات، أقدّم حلولاً هندسية متكاملة تجمع بين الاستقرار،
+          الأمان، والأداء العالي — من الشبكات الداخلية وأنظمة المراقبة إلى الاتصالات المتقدمة وإدارة أجهزة MikroTik.
+        </p>
+        <p class="text-slate-400 leading-relaxed mb-9 max-w-2xl mx-auto lg:mr-0">
+          الهدف واحد: بنية تحتية تثق بها، وتعمل بلا انقطاع. <span class="text-cyanx-400 font-bold">«اتصل نصل»</span>
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-xl mx-auto lg:mr-0">
+          <div class="rounded-2xl p-4 border border-cyanx-400/15 bg-navy-800/60">
+            <div class="text-2xl font-black text-cyanx-400">+8</div>
+            <div class="text-[13px] text-slate-400 mt-1">سنوات خبرة</div></div>
+          <div class="rounded-2xl p-4 border border-cyanx-400/15 bg-navy-800/60">
+            <div class="text-2xl font-black text-cyanx-400">+120</div>
+            <div class="text-[13px] text-slate-400 mt-1">مشروع منجز</div></div>
+          <div class="col-span-2 sm:col-span-1 rounded-2xl p-4 border border-cyanx-400/15 bg-navy-800/60">
+            <div class="text-2xl font-black text-cyanx-400">24/7</div>
+            <div class="text-[13px] text-slate-400 mt-1">دعم فني</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTS & EXPERIENCE ============ -->
+<section id="certs" class="relative py-20 sm:py-28 overflow-hidden">
+  <div class="absolute -top-32 left-1/4 w-[500px] h-[500px] rounded-full bg-cyanx-500/8 blur-[120px] pointer-events-none"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-20 reveal">
+      <span class="text-cyanx-400 font-black text-sm tracking-[3px]">مسيرتي المهنية</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-3 mb-4">الشهادات والخبرات</h2>
+      <p class="text-slate-400 leading-relaxed">سنوات من العمل الميداني، ودورات معتمدة في هندسة الشبكات والأنظمة.</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto mb-20">
+      <h3 class="text-xl font-extrabold text-cyanx-400 text-center mb-10 flex items-center justify-center gap-3">
+        <span class="w-10 h-px bg-cyanx-400/40"></span>الخبرات العملية<span class="w-10 h-px bg-cyanx-400/40"></span>
+      </h3>
+      <div class="relative pr-8 sm:pr-10" id="timeline"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto">
+      <h3 class="text-xl font-extrabold text-cyanx-400 text-center mb-10 flex items-center justify-center gap-3">
+        <span class="w-10 h-px bg-cyanx-400/40"></span>الشهادات والدورات<span class="w-10 h-px bg-cyanx-400/40"></span>
+      </h3>
+      <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" id="certsGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="relative py-20 sm:py-28 bg-navy-900/60 border-y border-cyanx-400/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+      <span class="text-cyanx-400 font-black text-sm tracking-[3px]">اتصل بنا</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-3 mb-4">الزيلعي تك لينك .. أينما كنت</h2>
+      <p class="text-slate-400 leading-relaxed">تواصل مباشر عبر الواتساب — استجابة سريعة، واستشارة مجانية لمشروعك.</p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+      <a href="https://wa.me/967717117765"
+         class="reveal rounded-3xl p-8 text-center border border-green-500/30
+                bg-gradient-to-b from-green-600/15 to-navy-900/60
+                hover:border-green-500/70 hover:-translate-y-1.5 transition duration-300">
+        <svg class="w-14 h-14 mx-auto mb-4 text-green-400 float-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <div class="text-lg font-extrabold text-white mb-2">واتساب مباشر</div>
+        <div dir="ltr" class="text-2xl font-black text-green-400 tracking-wider">717117765</div>
+      </a>
+
+      <a href="tel:717117765"
+         class="reveal rounded-3xl p-8 text-center border border-cyanx-400/25
+                bg-gradient-to-b from-cyanx-500/12 to-navy-900/60
+                hover:border-cyanx-400/60 hover:-translate-y-1.5 transition duration-300">
+        <svg class="w-14 h-14 mx-auto mb-4 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+        <div class="text-lg font-extrabold text-white mb-2">اتصال هاتفي</div>
+        <div dir="ltr" class="text-2xl font-black text-cyanx-400 tracking-wider">717117765</div>
+      </a>
+    </div>
+
+    <p class="reveal text-center mt-12 text-slate-400 font-bold text-lg">
+      «اتصل نصل» — <span class="text-cyanx-400">الزيلعي تك لينك أينما كنت</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative pt-14 pb-8 bg-navy-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-12">
+      <div class="text-center">
+        <svg class="w-8 h-8 mx-auto mb-2 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+        <span class="text-sm font-extrabold text-slate-300">ثقة</span></div>
+      <div class="text-center">
+        <svg class="w-8 h-8 mx-auto mb-2 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+        <span class="text-sm font-extrabold text-slate-300">أمان</span></div>
+      <div class="text-center">
+        <svg class="w-8 h-8 mx-auto mb-2 text-cyanx-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"/></svg>
+        <span class="text-sm font-extrabold text-slate-300">مصداقية</span></div>
+    </div>
+
+    <div class="text-center mb-10">
+      <a href="https://wa.me/967717117765"
+         class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-white
+                bg-green-600 hover:bg-green-500 transition glow-sm">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span dir="ltr" class="text-xl tracking-wider">717117765</span>
+      </a>
+    </div>
+
+    <div class="border-t border-white/8 pt-6 text-center">
+      <p class="text-slate-500 text-sm">جميع الحقوق محفوظة © الزيلعي تك لينك .. 2026</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ زر واتساب عائم ============ -->
+<a href="https://wa.me/967717117765" aria-label="واتساب"
+   class="fixed bottom-5 left-5 z-50 w-14 h-14 rounded-full grid place-items-center
+          bg-green-600 hover:bg-green-500 text-white transition shadow-2xl shadow-green-600/40 pulse-wa">
+  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ============ النافذة المنبثقة ============ -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel">
+    <button class="absolute top-4 left-4 z-20 w-10 h-10 rounded-full grid place-items-center
+                   bg-white/8 hover:bg-cyanx-500/25 text-slate-300 hover:text-white transition text-xl"
+            data-close aria-label="إغلاق">✕</button>
+
+    <div class="p-6 sm:p-8">
+      <div class="flex items-start gap-4 mb-5 pt-6 sm:pt-2">
+        <div class="w-14 h-14 shrink-0 rounded-2xl grid place-items-center glow-sm
+                    bg-gradient-to-br from-cyanx-400/20 to-cyanx-600/10 border border-cyanx-400/30"
+             id="mIconWrap"></div>
+        <div class="min-w-0">
+          <span id="mTag" class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-black mb-2
+                                bg-cyanx-500/15 text-cyanx-400 border border-cyanx-400/25"></span>
+          <h3 id="mTitle" class="text-xl sm:text-2xl font-black text-white leading-snug"></h3>
+        </div>
+      </div>
+
+      <p id="mDesc" class="text-slate-300/90 leading-relaxed mb-6"></p>
+
+      <ul id="mFeatures" class="grid gap-2.5 mb-7"></ul>
+
+      <div id="mGalleryWrap">
+        <h4 class="text-sm font-black text-cyanx-400 mb-3 flex items-center gap-2">
+          <span class="w-6 h-px bg-cyanx-400/40"></span>صور توضيحية
+        </h4>
+        <div id="mGallery" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+      </div>
+
+      <a href="https://wa.me/967717117765"
+         class="mt-8 flex items-center justify-center gap-3 w-full py-4 rounded-2xl font-black text-white
+                bg-green-600 hover:bg-green-500 transition">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        اطلب هذه الخدمة عبر واتساب
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   البيانات — كل بطاقة هنا تفتح نافذة بالتفاصيل والصور
+   لتغيير أي شيء: عدّل النص، أو أضف مسارات صورك في images
+   ============================================================ */
+const ICONS = {
+  wifi:'M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 0 1 1.06 0Z',
+  camera:'m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z',
+  phone:'M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z',
+  router:'M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3m-13.5 0v3.75a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V14.25',
+  tower:'M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M12 12h.008v.008H12V12Zm0 0-2.25 8.25M12 12l2.25 8.25',
+  server:'M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3m16.5 0h.008v.008h-.008v-.008Zm-3 0h.008v.008h-.008v-.008Z',
+  cert:'M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5',
+  image:'M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z'
+};
+
+const SERVICES = [
+  { key:'networks', tag:'شبكات', icon:'router', title:'شبكات متكاملة',
+    desc:'تصميم وتنفيذ شبكات كاملة للشركات والمنازل: راوترات، سويتشات، وتوزيع منظم للكابلات بمعايير هندسية دقيقة.',
+    features:['تصميم مخطط الشبكة وتوزيع النقاط','تركيب راوترات وسويتشات احترافية','تمديد وتنظيم الكابلات','اختبار السرعة والاستقرار بعد التسليم'],
+    images:['images/net-1.jpg','images/net-2.jpg','images/net-3.jpg'] },
+
+  { key:'cctv', tag:'مراقبة', icon:'camera', title:'أنظمة مراقبة ذكية',
+    desc:'تركيب وبرمجة كاميرات المراقبة بدقة عالية، مع متابعة مباشرة من جوالك في أي مكان بالعالم.',
+    features:['كاميرات IP بدقة عالية وليلية','تسجيل مركزي عبر NVR','مشاهدة مباشرة من الجوال','إعداد التنبيهات والحركة'],
+    images:['images/cctv-1.jpg','images/cctv-2.jpg','images/cctv-3.jpg'] },
+
+  { key:'telecom', tag:'اتصالات', icon:'phone', title:'اتصالات متقدمة',
+    desc:'أنظمة اتصالات IP وسنترالات، وهويات اتصال داخلية للشركات والمكاتب مع تحويل ذكي بين الأقسام.',
+    features:['تركيب سنترال IP','هواتف IP وتوزيع داخلي','تحويلات ذكية وترحيب صوتي','ربط الفروع عبر الشبكة'],
+    images:['images/tel-1.jpg','images/tel-2.jpg','images/tel-3.jpg'] },
+
+  { key:'mikrotik', tag:'MikroTik', icon:'router', title:'إدارة وبرمجة MikroTik',
+    desc:'ضبط وتخصيص أجهزة MikroTik باحتراف: توزيع سرعات عادل، حماية، وتقارير استخدام دقيقة.',
+    features:['توزيع السرعات والحدود','إعداد الجدار الناري والحماية','شبكات لاسلكية و Hotspot','تقارير ومراقبة الاستخدام'],
+    images:['images/mik-1.jpg','images/mik-2.jpg','images/mik-3.jpg'] },
+
+  { key:'wireless', tag:'لاسلكي', icon:'tower', title:'شبكات لاسلكية وأبراج',
+    desc:'ربط المسافات البعيدة عبر أبراج التقوية والوصلات اللاسلكية المستقرة، لمواقع يصعب مد الكابلات إليها.',
+    features:['وصلات Point-to-Point','أبراج تقوية وتركيب احترافي','ضبط الإشارة والاتجاه','استقرار عالٍ ومقاومة للعوامل'],
+    images:['images/tower-1.jpg','images/tower-2.jpg','images/tower-3.jpg'] },
+
+  { key:'servers', tag:'سيرفرات', icon:'server', title:'سيرفرات وبرمجة متقدمة',
+    desc:'إعداد وبرمجة سيرفرات الشبكات وأنظمة الإدارة المتكاملة بصلاحيات آمنة ومعايير حماية عالية.',
+    features:['إعداد سيرفر مركزي','إدارة المستخدمين والصلاحيات','نسخ احتياطي وحماية بيانات','مراقبة الأداء والصيانة'],
+    images:['images/srv-1.jpg','images/srv-2.jpg','images/srv-3.jpg'] }
+];
+
+const WORKS = [
+  { key:'w1', tag:'شبكات', icon:'router', title:'شبكة شركة متكاملة',
+    desc:'تصميم وتنفيذ شبكة داخلية لشركة تجارية مع توزيع منظم للكابلات وحماية كاملة للشبكة.',
+    features:['60 نقطة شبكة','سويتشات مُدارة','VLAN للأقسام','لوحة توزيع منظمة'],
+    images:['images/work1-1.jpg','images/work1-2.jpg','images/work1-3.jpg'] },
+
+  { key:'w2', tag:'مراقبة', icon:'camera', title:'نظام مراقبة ذكي',
+    desc:'تركيب وبرمجة 16 كاميرا مراقبة عالية الدقة مع تسجيل مركزي ومتابعة عن بُعد.',
+    features:['16 كاميرا IP','NVR مركزي','مشاهدة من الجوال','تنبيهات الحركة'],
+    images:['images/work2-1.jpg','images/work2-2.jpg','images/work2-3.jpg'] },
+
+  { key:'w3', tag:'لاسلكي', icon:'tower', title:'ربط لاسلكي بين موقعين',
+    desc:'وصل مسافة 4 كم بين موقعين عبر أبراج تقوية مع استقرار عالٍ وسرعة ثابتة.',
+    features:['مسافة 4 كم','Point-to-Point','سرعة مستقرة','مقاومة للعوامل الجوية'],
+    images:['images/work3-1.jpg','images/work3-2.jpg','images/work3-3.jpg'] },
+
+  { key:'w4', tag:'اتصالات', icon:'phone', title:'سنترال اتصالات IP',
+    desc:'تجهيز نظام اتصالات داخلي لمكتب إداري بهواتف IP وتحويل ذكي بين الأقسام.',
+    features:['12 هاتف IP','تحويلات ذكية','ترحيب صوتي','ربط بين الطوابق'],
+    images:['images/work4-1.jpg','images/work4-2.jpg','images/work4-3.jpg'] },
+
+  { key:'w5', tag:'MikroTik', icon:'router', title:'إدارة توزيع سرعات',
+    desc:'برمجة أجهزة MikroTik لتوزيع سرعات عادل بين المشتركين مع تقارير استخدام دقيقة.',
+    features:['توزيع عادل للسرعات','حدود لكل مستخدم','تقارير استخدام','حماية من الاختراق'],
+    images:['images/work5-1.jpg','images/work5-2.jpg','images/work5-3.jpg'] },
+
+  { key:'w6', tag:'سيرفرات', icon:'server', title:'سيرفر إدارة مركزي',
+    desc:'إعداد سيرفر مركزي لإدارة الشبكة والمستخدمين بصلاحيات آمنة ونسخ احتياطي دوري.',
+    features:['سيرفر مركزي','صلاحيات متعددة','نسخ احتياطي','مراقبة الأداء'],
+    images:['images/work6-1.jpg','images/work6-2.jpg','images/work6-3.jpg'] }
+];
+
+const CERTS = [
+  { key:'c1', tag:'شهادة', icon:'cert', title:'شهادة MikroTik MTCNA',
+    desc:'شهادة معتمدة في أساسيات الشبكات وإدارة أجهزة MikroTik.',
+    features:['أساسيات التوجيه','إدارة الأجهزة','الجدار الناري'],
+    images:['images/cert1-1.jpg','images/cert1-2.jpg'] },
+
+  { key:'c2', tag:'دورة', icon:'cert', title:'دورة أمن الشبكات',
+    desc:'دورة متخصصة في حماية الشبكات وإعداد الجدر النارية ومراقبة الاختراقات.',
+    features:['حماية الشبكات','إعداد Firewall','مراقبة التهديدات'],
+    images:['images/cert2-1.jpg','images/cert2-2.jpg'] },
+
+  { key:'c3', tag:'دورة', icon:'cert', title:'أنظمة المراقبة CCTV',
+    desc:'دورة عملية في تركيب وبرمجة كاميرات المراقبة وأنظمة التسجيل المركزي.',
+    features:['تركيب الكاميرات','برمجة NVR','متابعة عن بُعد'],
+    images:['images/cert3-1.jpg','images/cert3-2.jpg'] }
+];
+
+const EXPERIENCE = [
+  { year:'2022 — الآن', title:'مهندس شبكات وحلول متكاملة', place:'الزيلعي تك لينك — عمل حر',
+    desc:'تصميم وتنفيذ شبكات للشركات والأفراد، إدارة أجهزة MikroTik، وتركيب أنظمة مراقبة واتصالات.' },
+  { year:'2020 — 2022', title:'فني شبكات واتصالات', place:'قطاع الاتصالات',
+    desc:'تركيب وصيانة خطوط الشبكات، مد الكابلات، وتجهيز غرف الاتصالات.' },
+  { year:'2018 — 2020', title:'بداية المسار التقني', place:'تدريب وتعلّم ميداني',
+    desc:'تعلّم أساسيات الشبكات، أنظمة المراقبة، وبرمجة الأجهزة تحت إشراف مختصين.' }
+];
+
+/* ============ بناء البطاقات ============ */
+const svg = (d, cls) => `<svg class="${cls}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${d}"/></svg>`;
+
+function mediaBox(src, alt, cls, iconKey) {
+  return `<div class="media ${cls}">
+    <img src="${src}" alt="${alt}" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()">
+    ${svg(ICONS[iconKey] || ICONS.image, 'w-12 h-12 text-cyanx-400/50')}
+  </div>`;
+}
+
+function card(item, aspect) {
+  return `<article data-open="${item.key}" tabindex="0" role="button" aria-label="${item.title}"
+    class="reveal group cursor-pointer rounded-3xl overflow-hidden border border-cyanx-400/15
+           bg-navy-800/60 hover:border-cyanx-400/50 hover:-translate-y-1.5 transition duration-300
+           focus:outline-none focus:ring-2 focus:ring-cyanx-400/50">
+    <div class="relative">
+      ${mediaBox(item.images[0], item.title, aspect, item.icon)}
+      <span class="absolute top-3 right-3 z-20 px-3 py-1 rounded-full text-[11px] font-black
+                   bg-cyanx-500/90 text-navy-950">${item.tag}</span>
+      <span class="absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-lg text-[10px] font-bold
+                   bg-navy-950/80 text-cyanx-400 border border-cyanx-400/25 backdrop-blur">
+        اضغط للتفاصيل ↗
+      </span>
+    </div>
+    <div class="p-5 sm:p-6">
+      <h3 class="text-lg font-extrabold text-white mb-2">${item.title}</h3>
+      <p class="text-slate-400 text-[14px] leading-relaxed">${item.desc.slice(0, 90)}…</p>
+    </div>
+  </article>`;
+}
+
+document.getElementById('servicesGrid').innerHTML = SERVICES.map(s => card(s, 'h-44 w-full')).join('');
+document.getElementById('worksGrid').innerHTML    = WORKS.map(w => card(w, 'h-52 w-full')).join('');
+document.getElementById('certsGrid').innerHTML    = CERTS.map(c => card(c, 'h-44 w-full')).join('');
+
+document.getElementById('timeline').innerHTML = `
+  <span class="absolute right-[7px] sm:right-[9px] top-2 bottom-2 w-0.5
+               bg-gradient-to-b from-cyanx-400/70 via-cyanx-500/30 to-transparent"></span>
+  ${EXPERIENCE.map(e => `
+    <div class="reveal relative mb-9 last:mb-0">
+      <span class="absolute -right-8 sm:-right-10 top-1.5 w-4 h-4 rounded-full bg-cyanx-400 glow-sm ring-4 ring-cyanx-500/15"></span>
+      <span class="inline-block px-3 py-1 rounded-full text-[11px] font-black mb-2
+                   bg-cyanx-500/15 text-cyanx-400 border border-cyanx-400/25">${e.year}</span>
+      <h4 class="text-lg font-extrabold text-white mb-1">${e.title}</h4>
+      <p class="text-cyanx-400/80 text-sm font-bold mb-2">${e.place}</p>
+      <p class="text-slate-400 text-[14px] leading-relaxed">${e.desc}</p>
+    </div>`).join('')}
+`;
+
+/* ============ النافذة المنبثقة ============ */
+const ALL = [...SERVICES, ...WORKS, ...CERTS];
+const modal   = document.getElementById('modal');
+const mTitle  = document.getElementById('mTitle');
+const mDesc   = document.getElementById('mDesc');
+const mTag    = document.getElementById('mTag');
+const mIcon   = document.getElementById('mIconWrap');
+const mFeat   = document.getElementById('mFeatures');
+const mGal    = document.getElementById('mGallery');
+const mGalW   = document.getElementById('mGalleryWrap');
+let lastFocus = null;
+
+function openModal(key) {
+  const item = ALL.find(x => x.key === key);
+  if (!item) return;
+
+  lastFocus = document.activeElement;
+  mTitle.textContent = item.title;
+  mDesc.textContent  = item.desc;
+  mTag.textContent   = item.tag;
+  mIcon.innerHTML    = svg(ICONS[item.icon] || ICONS.image, 'w-7 h-7 text-cyanx-400');
+
+  mFeat.innerHTML = item.features.map(f => `
+    <li class="flex items-start gap-3 text-slate-300 text-[14.5px]">
+      <span class="mt-0.5 w-5 h-5 shrink-0 rounded-full grid place-items-center
+                   bg-cyanx-500/15 text-cyanx-400 text-[11px] font-black border border-cyanx-400/25">✓</span>
+      <span>${f}</span>
+    </li>`).join('');
+
+  mGal.innerHTML = item.images.map((src, i) => `
+    <div class="media h-28 sm:h-32 rounded-xl">
+      <img src="${src}" alt="${item.title} ${i+1}" loading="lazy"
+           onload="this.classList.add('ok')" onerror="this.remove()">
+      ${svg(ICONS.image, 'w-8 h-8 text-cyanx-400/40')}
+    </div>`).join('');
+
+  mGalW.style.display = item.images.length ? '' : 'none';
+
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.modal-panel').scrollTop = 0;
+}
+
+function closeModal() {
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
+}
+
+document.addEventListener('click', e => {
+  const opener = e.target.closest('[data-open]');
+  if (opener) { openModal(opener.dataset.open); return; }
+  if (e.target.closest('[data-close]')) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-open]')) {
+    e.preventDefault(); openModal(e.target.dataset.open);
+  }
+});
+
+/* ============ الترويسة والقائمة ============ */
+const nav = document.getElementById('nav');
+function onScroll() {
+  if (window.scrollY > 24) {
+    nav.classList.add('bg-navy-950/95','backdrop-blur-xl','border-cyanx-400/15','shadow-lg','shadow-black/30');
+  } else {
+    nav.classList.remove('bg-navy-950/95','backdrop-blur-xl','border-cyanx-400/15','shadow-lg','shadow-black/30');
+  }
+}
+window.addEventListener('scroll', onScroll, { passive:true });
+onScroll();
+
+const toggle = document.getElementById('navToggle');
+const menu   = document.getElementById('mobileMenu');
+const bars   = toggle.querySelectorAll('span');
+
+function setMenu(open) {
+  menu.style.maxHeight = open ? menu.scrollHeight + 'px' : '0px';
+  toggle.setAttribute('aria-expanded', String(open));
+  bars[0].style.transform = open ? 'translateY(8px) rotate(45deg)' : '';
+  bars[1].style.opacity   = open ? '0' : '1';
+  bars[2].style.transform = open ? 'translateY(-8px) rotate(-45deg)' : '';
+}
+toggle.addEventListener('click', () => setMenu(menu.style.maxHeight === '0px' || !menu.style.maxHeight));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+window.addEventListener('resize', () => { if (window.innerWidth >= 1024) setMenu(false); });
+
+/* ============ ظهور تدريجي ============ */
+const items = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en, i) => {
+      if (en.isIntersecting) {
+        setTimeout(() => en.target.classList.add('in'), i * 70);
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
+  items.forEach(el => io.observe(el));
+} else {
+  items.forEach(el => el.classList.add('in'));
+}
+
+/* ============ تمرير سلس ============ */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function (e) {
+    const id = this.getAttribute('href');
+    if (!id || id === '#') return;
+    const target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 76, behavior:'smooth' });
+  });
+});
+</script>
+</body>
+  </html>.nav-toggle span{width:18px;height:2px;background:var(--text);transition:.3s;border-radius:2px}
 .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-toggle.open span:nth-child(2){opacity:0}
 .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
