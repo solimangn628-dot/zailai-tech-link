@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://solimangn628-dot.github.io/zailai-tech-link/sitemap.xml
